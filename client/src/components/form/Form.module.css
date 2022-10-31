@@ -1,0 +1,110 @@
+.formContainer{
+  background-image: url('https://www.teahub.io/photos/full/236-2363989_wallpaper-space-continents-map-2560-x-1440-world.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+}
+
+.formContainer button{
+  background-color: rgba(255, 255, 255, 0.863);
+  border: solid 1px rgb(233, 225, 225);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  color: rgb(18, 2, 61);
+  font-weight: 700;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.formContainer button:hover{
+  background-color: white;
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+}
+
+.form{
+  backdrop-filter: blur(1px);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  border: double 5px rgb(186, 182, 182);
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  padding: 0 20px;
+}
+
+.form input{
+  margin-left: 30px;
+  margin-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+.inputCheck {
+  display: inline;
+}
+
+.formLabel{
+  background-color: rgba(255, 255, 255, 0.548);
+  border: solid 1px rgb(233, 225, 225);
+  margin: 15px 0;
+  padding: 10px;
+  box-shadow: rgba(25, 25, 25, 0.2) 0px 2px 8px 0px;
+  color: rgb(20, 20, 20);
+  font-weight: 700;
+}
+
+.formLabelCountrie{
+  background-color: rgba(255, 255, 255, 0.548);
+  border: solid 1px rgb(233, 225, 225);
+  padding: 0 10px;
+  padding-bottom: 20px;
+  box-shadow: rgba(30, 29, 29, 0.2) 0px 2px 8px 0px;
+  color: rgb(20, 20, 20);
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.formLabelCountrie p{
+  margin-bottom: 5px;
+}
+
+.btnSelectCountrie{
+  margin: 5px;
+}
+
+.btnCountrieMain{
+  display: flex;
+}
+
+.btnCountrie{
+  border: solid 1px rgb(243, 242, 242);
+  display: flex;
+  margin-right: 20px;
+  margin-bottom: 8px;
+  padding: 0px 10px;
+  border-radius: 30px;
+}
+
+.btnCountrie p{
+  margin: 1px;
+  font-size: 13px;
+}
+
+.btnDelete{
+  font-size: 8px;
+  border-radius: 30px;
+  height: 13px;
+  width: 13px;
+  margin-left: 5px;
+  margin-top: 3px !important;
+  padding: 1px;
+  border: none;
+  cursor: pointer;
+}
+
+.btnSubmit{
+  margin: 30px 30px;
+}

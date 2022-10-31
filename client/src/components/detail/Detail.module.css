@@ -1,0 +1,60 @@
+.detailContainer{
+  background-image: url('https://www.teahub.io/photos/full/236-2363989_wallpaper-space-continents-map-2560-x-1440-world.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  width: 100%; 
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailContainer button{
+  background-color: rgba(255, 255, 255, 0.863);
+  border: solid 1px rgb(233, 225, 225);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  color: rgb(18, 2, 61);
+  font-weight: 700;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.detailContainer button:hover{
+  background-color: white;
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+}
+
+.detailCard{
+  backdrop-filter: blur(1px);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  border: double 5px rgb(186, 182, 182);
+  padding: 10px;
+  margin: 30px 10px;
+  display: flex;
+}
+
+.detailContainer img{
+  width: 350px;
+  height: 200px;
+}
+
+.detailTitle{
+  text-align: center;
+}
+
+.detailTitle h3{
+  text-shadow: 3px 2px 1px rgb(13, 12, 12);
+  color: aliceblue;
+}
+
+.detailInfo{
+  width: 100%;
+  margin-left: 50px;
+  border: solid 1px rgb(233, 225, 225);
+  padding-left: 5px;
+  background-color: rgba(255, 255, 255, 0.548);
+  color: rgb(20, 20, 20);
+  font-weight: 700;
+}

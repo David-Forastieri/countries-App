@@ -1,0 +1,40 @@
+
+.card{
+  border: solid 1px rgb(233, 225, 225);
+  border-radius: 15px;
+  margin: 15px 30px;
+  padding: 10px;
+  backdrop-filter: blur(1px);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+}
+
+.card:hover{
+  box-shadow: rgba(224, 225, 227, 0.721) 0px 8px 24px;
+}
+
+.text{
+  color: rgb(20, 20, 20);
+  margin-top: 0;
+  margin-bottom: 3px;
+  font-weight: 700;
+}
+
+.textSmall{
+  font-size: 12px;
+  text-align: end;
+  margin-right: 5px;
+  color: black;
+  font-weight: 500;
+}
+
+.textMain{
+  border: solid 1px rgb(233, 225, 225);
+  padding-left: 5px;
+  background-color: rgba(255, 255, 255, 0.548);
+}
+
+.card img{
+  width: 200px;
+  height: 100px;
+}

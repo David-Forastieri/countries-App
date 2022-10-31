@@ -1,0 +1,40 @@
+.container{
+  background-image: url('https://www.teahub.io/photos/full/236-2363989_wallpaper-space-continents-map-2560-x-1440-world.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardText{
+  backdrop-filter: blur(1px);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  border: double 5px rgb(186, 182, 182);
+  padding: 50px;
+  border-radius: 80px 10px;
+}
+
+.cardText h1{
+  color: rgba(5, 7, 71, 0.879);
+  text-shadow: 2px 5px 5px rgba(255, 255, 255, 0.834);
+}
+
+.cardText button{
+  background-color: rgba(255, 255, 255, 0.863);
+  border: solid 1px rgb(233, 225, 225);
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+  color: rgb(18, 2, 61);
+  font-weight: 700;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.cardText button:hover{
+  background-color: white;
+  box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+}
