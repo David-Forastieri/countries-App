@@ -145,7 +145,7 @@ const Home = () => {
       {allCountries.length || Countries.length ?
         <div className={style.countries} >
           {allCountries.map((c, i) => {
-            return <Link key={i} to={`detail/${c.fifa}`} >
+            return <Link key={i} to={`detail/${c.cca3}`} >
               <CountriesCard
                 flag={c.flags[1]}
                 name={c.name.common}

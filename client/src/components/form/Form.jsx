@@ -77,9 +77,11 @@ const Form = () => {
         <div className={style.formLabel} >
           <label>Difficulty:</label>
           <div className={style.inputcheck} >
-            <input type="radio" name="difficulty" id='Easy' onChange={handlerCheck} />Easy
-            <input type="radio" name="difficulty" id='Normal' onChange={handlerCheck} />Normal
-            <input type="radio" name="difficulty" id='Hard' onChange={handlerCheck} />Hard
+            <input type="radio" name="difficulty" id='1' onChange={handlerCheck} />1
+            <input type="radio" name="difficulty" id='2' onChange={handlerCheck} />2
+            <input type="radio" name="difficulty" id='3' onChange={handlerCheck} />3
+            <input type="radio" name="difficulty" id='4' onChange={handlerCheck} />4
+            <input type="radio" name="difficulty" id='5' onChange={handlerCheck} />5
           </div>
         </div>
 

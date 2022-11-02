@@ -6,9 +6,9 @@ import style from './Detail.module.css'
 const CountriesDetail = () => {
 
   let { cod } = useParams()
-  let countrie = useSelector(state => state.countries).find(e => e.fifa === cod)
+  let countrie = useSelector(state => state.countries).find(e => e.cca3 === cod)
 
-  let { flags, name, fifa, continents, capital, subregion, area, population, activity } = countrie;
+  let { flags, name, cca3, continents, capital, subregion, area, population, activity } = countrie;
 
 
   return (
@@ -20,7 +20,7 @@ const CountriesDetail = () => {
       </div>
       <div className={style.detailCard} >
         <div className={style.detailTitle}>
-          <h3>{name.common} ({fifa})</h3>
+          <h3>{name.common} ({cca3})</h3>
           <img src={flags[1]} alt={name.common} />
         </div>
         <div className={style.detailInfo}>
