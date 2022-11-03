@@ -1,19 +1,12 @@
 const { Router } = require('express');
-/* const morgan = require('morgan'); */
-const axios = require("axios")
+const axios = require("axios");
 const { Country, TouristActivity} = require('../db');
-const {op} = require("sequelize");
+const {op, json} = require("sequelize");
 const { get } = require('../app');
 const server = require('../app');
+const router = Router();
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-
-
-const router = Router();
-
-/* server.use(express.json());
-
-server.use(morgan('dev')); */
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -49,7 +42,6 @@ router.get('/',async (req, res)=>{
 router.get('/countries/:codeId', async (req, res)=>{
   //http://localhost:3001/countries/MYS
   const {codeId} = req.params;
-  console.log(codeId)
   const country = await Country.findOne({
     where: {codeId : codeId},
       include: TouristActivity
@@ -71,20 +63,31 @@ router.get('/countries', async (req, res)=>{
 
 router.post('/activities', async (req, res)=>{
   //http://localhost:3001/activities
-  
-  const {name, duration, season, difficulty, paises} = req.body;
-  try {
-    const newActivity = await TouristActivity.create({
-      name,
-      duration,
-      season,
-      difficulty
-    })
 
-    await newActivity.setCountries(paises)
+  let algo = req.body
+  const newActivity = await TouristActivity.create({
+    touristActivity: algo.data.touristActivity,
+    duration: algo.data.duration,
+    season: algo.data.season,
+    difficulty: algo.data.difficulty
+  })
+
+  try {
+    /* const {data, ct} = req.body;
+    const {touristActivity, duration, season, difficulty} = data; */
+    /* const newActivity = await TouristActivity.create({
+      touristActivity: data.touristActivity,
+      duration: data.duration,
+      season: data.season,
+      difficulty: data.difficulty
+    }) */
+
+    console.log(newActivity)
+
+    await newActivity.setCountries(algo.ct)
     res.send(cagada)
   } catch (error) {
-    res.send(error)
+    res.send('algo salio mal')
   }
 })
 

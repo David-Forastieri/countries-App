@@ -1,14 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+//import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { addTouristActivity } from '../../actions'
+//import { addTouristActivity } from '../../actions'
 import style from './Form.module.css'
 
 const Form = () => {
 
   const [allCountries, setAllCountries] = useState([])
   const [selecCountrie, setSelecCountrie] = useState([])
+  const [countryId, setCountryId] = useState([])
   const [data, setData] = useState({
     touristActivity: "",
     difficulty: "",
@@ -17,10 +19,13 @@ const Form = () => {
   })
 
   const history = useNavigate()
-  const dispatch = useDispatch()
+ // const dispatch = useDispatch()
   const Countries = useSelector(state => state.countries)
 
-
+  const saveCountryId = (e) =>{
+    setCountryId([...countryId, e.codeId])
+    setSelecCountrie([...selecCountrie, e.name])
+  }
 
   const handlerChange = (e) => {
     setData({
@@ -38,14 +43,27 @@ const Form = () => {
     }
   }
 
-  const handleChange = (e) => {
-    let countriesSearch = Countries.filter(ch => ch.name.common.toLowerCase().indexOf(e.target.value) !== -1)
+  const countryChange = (e) => {
+    let countriesSearch = Countries.filter(ch => ch.name.toLowerCase().indexOf(e.target.value) !== -1)
     setAllCountries(countriesSearch)
   }
 
   const submitForm = (e) => {
     e.preventDefault()
-    dispatch(addTouristActivity(data, selecCountrie))
+
+    const value = {data, ct: countryId}
+
+    fetch('http://localhost:3001/activities', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(value), // data can be `string` or {object}!
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(response => console.log('Success:', response))
+    .catch(error => console.error('Error:', error));
+
+    //   dispatch(addTouristActivity(data, selecCountrie))
     setData({
       touristActivity: "",
       difficulty: "",
@@ -99,36 +117,36 @@ const Form = () => {
             <input type="radio" name='season' id="Spring" onChange={handlerCheck} />Spring
           </div>
         </div>
-      
-      <div className={style.formLabelCountrie}>
-        <p>Carry out activity in:</p>
-        <div className={style.btnCountrieMain}>
-          {selecCountrie.length > 0 &&
-            selecCountrie.map(e => {
-              return <div key={e} className={style.btnCountrie}>
-                <p>{e}</p>
-                <button className={style.btnDelete} onClick={() => { deleteCountrie(e) }} >X</button>
-              </div>
+
+        <div className={style.formLabelCountrie}>
+          <p>Carry out activity in:</p>
+          <div className={style.btnCountrieMain}>
+            {selecCountrie.length > 0 &&
+              selecCountrie.map(e => {
+                return <div key={e} className={style.btnCountrie}>
+                  <p>{e}</p>
+                  <button className={style.btnDelete} onClick={() => { deleteCountrie(e) }} >X</button>
+                </div>
+              })
+            }
+          </div>
+          <div>
+            <input type="text" onChange={countryChange} />
+            <button>Search</button>
+          </div>
+          {allCountries &&
+            allCountries.map(e => {
+              return <button
+                key={e.name}
+                onClick={() => { saveCountryId(e) }}
+                className={style.btnSelectCountrie}
+              >{e.name}</button>
             })
           }
         </div>
-        <div>
-          <input type="text" onChange={handleChange} />
-          <button>Search</button>
-        </div>
-        {allCountries &&
-          allCountries.map(e => {
-            return <button
-              key={e.name.common}
-              onClick={() => { setSelecCountrie([...selecCountrie, e.name.common]) }}
-              className={style.btnSelectCountrie}
-            >{e.name.common}</button>
-          })
-        }
+        <button type='submit' onClick={submitForm} className={style.btnSubmit} >Create</button>
       </div>
-      <button type='submit' onClick={submitForm} className={style.btnSubmit} >Create</button>
-      </div>
-      
+
     </div>
   )
 }

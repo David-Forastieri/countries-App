@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCountries } from '../../actions'
 import CountriesCard from '../cards/CountriesCard'
-import InitialPage from '../Landing/InitialPage'
+import Load from '../Load/Load'
+//import InitialPage from '../Landing/InitialPage'
 import style from './Home.module.css'
 
 const Home = () => {
@@ -28,12 +29,12 @@ const Home = () => {
 
   const handleChange = (e) => {
     setControlSearch(e.target.value)
-    let countriesSearch = Countries.filter(ch => ch.name.common.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1)
+    let countriesSearch = Countries.filter(ch => ch.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1)
     setAllCountries(countriesSearch)
   }
 
   const continentsFilter = (continents) => {
-    let continentsSelected = Countries.filter(ch => ch.continents[0] === continents)
+    let continentsSelected = Countries.filter(ch => ch.continents === continents)
     setAllCountries([...continentsSelected].splice(0, itemPerPage))
   }
 
@@ -58,16 +59,16 @@ const Home = () => {
 
   const handlerOrderAlpha = (param) => {
     if (param === 'az') {
-      let order = Countries.sort((a, b) => {
-        if (a.name.common < b.name.common) return -1
-        if (a.name.common > b.name.common) return 1
+      let order = allCountries.sort((a, b) => {
+        if (a.name < b.name) return -1
+        if (a.name > b.name) return 1
         return 0
       })
       setAllCountries([...order].splice(0, itemPerPage))
     } else {
-      let order = Countries.sort((a, b) => {
-        if (a.name.common > b.name.common) return -1
-        if (a.name.common < b.name.common) return 1
+      let order = allCountries.sort((a, b) => {
+        if (a.name > b.name) return -1
+        if (a.name < b.name) return 1
         return 0
       })
       setAllCountries([...order].splice(0, itemPerPage))
@@ -76,14 +77,14 @@ const Home = () => {
 
   const handlerOrderNum = (param) => {
     if (param === 'az') {
-      let order = Countries.sort((a, b) => {
+      let order = allCountries.sort((a, b) => {
         if (a.population < b.population) return -1
         if (a.population > b.population) return 1
         return 0
       })
       setAllCountries([...order].splice(0, itemPerPage))
     } else {
-      let order = Countries.sort((a, b) => {
+      let order = allCountries.sort((a, b) => {
         if (a.population > b.population) return -1
         if (a.population < b.population) return 1
         return 0
@@ -137,19 +138,20 @@ const Home = () => {
               <li onClick={() => { continentsFilter('Asia') }}>Asia</li>
               <li onClick={() => { continentsFilter('Africa') }}>Africa</li>
               <li onClick={() => { continentsFilter('Oceania') }}>Oceania</li>
+              <li onClick={() => { continentsFilter('Antarctica') }}>Antartica</li>
             </ul>}
         </div>
       </div>
 
-      <div>{!Countries.length && <p>Loading...</p>}</div>
+      <div>{!Countries.length && <Load/>}</div>
       {allCountries.length || Countries.length ?
         <div className={style.countries} >
-          {allCountries.map((c, i) => {
-            return <Link key={i} to={`detail/${c.cca3}`} >
+          {allCountries.map((c) => {
+            return <Link key={c.codeId} to={`detail/${c.codeId}`} >
               <CountriesCard
-                flag={c.flags[1]}
-                name={c.name.common}
-                continents={c.continents[0]}
+                flag={c.flag}
+                name={c.name}
+                continents={c.continents}
               />
             </Link>
           })}

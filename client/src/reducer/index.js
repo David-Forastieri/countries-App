@@ -1,37 +1,36 @@
 const initialState = {
-  countries : [],
-  continentsFilter: []
+  countries: [],
+  countryDetail: {}
 };
 
-export default function reducer(state=initialState, actions){
+export default function reducer(state = initialState, actions) {
   switch (actions.type) {
     case "GET-COUNTRIES":
-      return{
+      return {
         ...state,
         countries: actions.payload
       }
-/* 
-    case "FILTER":
-      console.log(actions.payload)
-      return{
-        ...state,
-        continentsFilter : state.countries.filter(ch => ch.continents[0] === actions.payload)
-      } */
 
-      case "ADD-ACTIVITY":
-        let algo = []
-        actions.payload.selecCountrie.forEach(element => {
-          algo = [...algo, state.countries.filter(e=> e.name.common === element)]
-        });
+    /* case "ADD-ACTIVITY":
+      let algo = []
+      actions.payload.selecCountrie.forEach(element => {
+        algo = [...algo, state.countries.filter(e => e.name.common === element)]
+      });
 
-        algo.forEach(element=> {
-          return{
-            ...state,
-            countries:[...state.countries, element[0].activity = actions.payload.newActivity]
-          }
-        })
-  
+      algo.forEach(element => {
+        return {
+          ...state,
+          countries: [...state.countries, element[0].activity = actions.payload.newActivity]
+        }
+      }) */
+
+      case "GET-COUNTRY":
+        return {
+          ...state,
+          countryDetail: actions.payload
+        }
+
     default:
-      return {...state};
+      return { ...state };
   }
 }

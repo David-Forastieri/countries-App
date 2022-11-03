@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define('touristActivity', {
-    name: {
+    touristActivity: {
       type: DataTypes.STRING,
     },
     difficulty: {
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER
     },
     season: {
-      type: DataTypes.ENUM('summer', 'spring', 'winter', 'fall')
+      type: DataTypes.ENUM('Summer', 'Spring', 'Winter', 'Fall')
     }
   })
 }

@@ -1,15 +1,22 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+import { getCountry } from '../../actions'
+import Load from '../Load/Load'
 import style from './Detail.module.css'
 
 const CountriesDetail = () => {
-
+  //http://localhost:3001/countries/MYS
   let { cod } = useParams()
-  let countrie = useSelector(state => state.countries).find(e => e.cca3 === cod)
+  let dispatch = useDispatch()
+  const country = useSelector(state => state.countryDetail)
 
-  let { flags, name, cca3, continents, capital, subregion, area, population, activity } = countrie;
+  useEffect(() => {
+    dispatch(getCountry(cod))
+  }, [])
 
+  console.log(country)
 
   return (
     <div className={style.detailContainer} >
@@ -18,29 +25,31 @@ const CountriesDetail = () => {
           <button>{`<-Back`}</button>
         </Link>
       </div>
-      <div className={style.detailCard} >
-        <div className={style.detailTitle}>
-          <h3>{name.common} ({cca3})</h3>
-          <img src={flags[1]} alt={name.common} />
+      {country ?
+        <div className={style.detailCard} >
+          <div className={style.detailTitle}>
+            <h3>{country.name} ({country.codeId})</h3>
+            <img src={country.flag} alt={country.name} />
+          </div>
+          <div className={style.detailInfo}>
+            <ul>
+              <li>Continents: {country.continents}</li>
+              <li>Capital: {country.capital}</li>
+              <li>Subregion: {country.subRegion}</li>
+              <li>Area: {country.area} km2</li>
+              <li>Population: {country.population}</li>
+              {/* {!country.touristActivities &&
+              <><li>Tourist Activity: {countrie.touristActivities.touristActivity}</li>
+              <li>In season: {touristActivities.season}</li>
+              <li>Difficulty: {touristActivities.difficulty}</li>
+              <li>Activity duration: {touristActivities.duration}min</li>
+              </> } */}
+            </ul>
+          </div>
         </div>
-        <div className={style.detailInfo}>
-          <ul>
-            <li>Continents: {continents[0]}</li>
-            <li>Capital: {capital[0]}</li>
-            <li>Subregion: {subregion}</li>
-            <li>Area: {area} km2</li>
-            <li>Population: {population}</li>
-            {activity !== undefined ?
-              <><li>Tourist Activity: {activity.touristActivity}</li>
-              <li>In season: {activity.season}</li>
-              <li>Difficulty: {activity.difficulty}</li>
-              <li>Activity duration: {activity.duration}min</li>
-              </>
-              :
-              null}
-          </ul>
-        </div>
-      </div>
+        :
+        <Load />
+      }
     </div>
   )
 }
