@@ -3,8 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCountries } from '../../actions'
 import CountriesCard from '../cards/CountriesCard'
-import Load from '../Load/Load'
-//import InitialPage from '../Landing/InitialPage'
+import Load from '../Load/Load';
+import {
+  handleChange,
+  handlerNextPage,
+  handlerPrevPage,
+  handlerOrderAlpha,
+  handlerOrderNum,
+  continentsFilter
+} from '../../utils.js/utilsHome';
+
 import style from './Home.module.css'
 
 const Home = () => {
@@ -25,78 +33,12 @@ const Home = () => {
     }
     setAllCountries([...Countries].splice(0, itemPerPage))
 
-  }, [Countries.length, dispatch])
-
-  const handleChange = (e) => {
-    setControlSearch(e.target.value)
-    let countriesSearch = Countries.filter(ch => ch.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1)
-    setAllCountries(countriesSearch)
-  }
-
-  const continentsFilter = (continents) => {
-    let continentsSelected = Countries.filter(ch => ch.continents === continents)
-    setAllCountries([...continentsSelected].splice(0, itemPerPage))
-  }
-
-  const handlerNextPage = () => {
-    const countriesTotal = Countries.length;
-    const nextPage = currentPage + 1;
-    const firstIndex = nextPage * itemPerPage;
-    if (firstIndex >= countriesTotal) return;
-
-    setAllCountries([...Countries].splice(firstIndex, itemPerPage))
-    setCurrentPage(nextPage)
-  }
-
-  const handlerPrevPage = () => {
-    const prevPage = currentPage - 1;
-    if (prevPage < 0) return;
-    const firstIndex = prevPage * itemPerPage
-
-    setAllCountries([...Countries].splice(firstIndex, itemPerPage))
-    setCurrentPage(prevPage)
-  }
-
-  const handlerOrderAlpha = (param) => {
-    if (param === 'az') {
-      let order = allCountries.sort((a, b) => {
-        if (a.name < b.name) return -1
-        if (a.name > b.name) return 1
-        return 0
-      })
-      setAllCountries([...order].splice(0, itemPerPage))
-    } else {
-      let order = allCountries.sort((a, b) => {
-        if (a.name > b.name) return -1
-        if (a.name < b.name) return 1
-        return 0
-      })
-      setAllCountries([...order].splice(0, itemPerPage))
-    }
-  }
-
-  const handlerOrderNum = (param) => {
-    if (param === 'az') {
-      let order = allCountries.sort((a, b) => {
-        if (a.population < b.population) return -1
-        if (a.population > b.population) return 1
-        return 0
-      })
-      setAllCountries([...order].splice(0, itemPerPage))
-    } else {
-      let order = allCountries.sort((a, b) => {
-        if (a.population > b.population) return -1
-        if (a.population < b.population) return 1
-        return 0
-      })
-      setAllCountries([...order].splice(0, itemPerPage))
-    }
-  }
+  }, [Countries.length, dispatch]);
 
   return (
     <div className={style.container} >
       <div className={style.searchMain} >
-        <input type="text" onChange={handleChange} placeholder='Search for a country' />
+        <input type="text" onChange={(ev) => { handleChange(ev, setControlSearch, Countries, setAllCountries) }} placeholder='Search for a country' />
         <button onClick={() => {
           !controlSearch &&
             alert("Enter a country to search")
@@ -104,10 +46,10 @@ const Home = () => {
       </div>
 
       <div className={style.controlNav}>
-        <button onClick={() => { handlerPrevPage() }} >Prev</button>
+        <button onClick={() => { handlerPrevPage(currentPage, itemPerPage, Countries, setAllCountries, setCurrentPage) }} >Prev</button>
         <p>{currentPage + 1}</p>
         {allCountries.length >= itemPerPage &&
-          <button onClick={() => { handlerNextPage() }} >Next</button>
+          <button onClick={() => { handlerNextPage(Countries, itemPerPage, currentPage, setAllCountries, setCurrentPage) }} >Next</button>
         }
       </div>
 
@@ -121,10 +63,10 @@ const Home = () => {
           <button onClick={() => { setSelecOrderView(!selecOrderView) }} >Order</button>
           {!selecOrderView &&
             <ul>
-              <li onClick={() => { handlerOrderAlpha('az') }}>A - Z</li>
-              <li onClick={() => { handlerOrderAlpha('za') }}>Z - A</li>
-              <li onClick={() => { handlerOrderNum('za') }}>high population</li>
-              <li onClick={() => { handlerOrderNum('az') }}>minor population</li>
+              <li onClick={() => { handlerOrderAlpha('az', allCountries, itemPerPage, setAllCountries) }}>A - Z</li>
+              <li onClick={() => { handlerOrderAlpha('za', allCountries, itemPerPage, setAllCountries) }}>Z - A</li>
+              <li onClick={() => { handlerOrderNum('za', allCountries, itemPerPage, setAllCountries) }}>high population</li>
+              <li onClick={() => { handlerOrderNum('az', allCountries, itemPerPage, setAllCountries) }}>minor population</li>
             </ul>}
         </div>
         <div className={style.selec} >
@@ -132,18 +74,18 @@ const Home = () => {
           {!selecFilterView &&
             <ul>
               <li onClick={() => { setAllCountries([...Countries].splice(0, itemPerPage)) }}>All</li>
-              <li onClick={() => { continentsFilter('North America') }}>North America</li>
-              <li onClick={() => { continentsFilter('South America') }}>South America</li>
-              <li onClick={() => { continentsFilter('Europe') }}>Europe</li>
-              <li onClick={() => { continentsFilter('Asia') }}>Asia</li>
-              <li onClick={() => { continentsFilter('Africa') }}>Africa</li>
-              <li onClick={() => { continentsFilter('Oceania') }}>Oceania</li>
-              <li onClick={() => { continentsFilter('Antarctica') }}>Antartica</li>
+              <li onClick={() => { continentsFilter('North America', Countries, setAllCountries, itemPerPage) }}>North America</li>
+              <li onClick={() => { continentsFilter('South America', Countries, setAllCountries, itemPerPage) }}>South America</li>
+              <li onClick={() => { continentsFilter('Europe', Countries, setAllCountries, itemPerPage) }}>Europe</li>
+              <li onClick={() => { continentsFilter('Asia', Countries, setAllCountries, itemPerPage) }}>Asia</li>
+              <li onClick={() => { continentsFilter('Africa', Countries, setAllCountries, itemPerPage) }}>Africa</li>
+              <li onClick={() => { continentsFilter('Oceania', Countries, setAllCountries, itemPerPage) }}>Oceania</li>
+              <li onClick={() => { continentsFilter('Antarctica', Countries, setAllCountries, itemPerPage) }}>Antartica</li>
             </ul>}
         </div>
       </div>
 
-      <div>{!Countries.length && <Load/>}</div>
+      <div>{!Countries.length && <Load />}</div>
       {allCountries.length || Countries.length ?
         <div className={style.countries} >
           {allCountries.map((c) => {

@@ -7,17 +7,13 @@ import Load from '../Load/Load'
 import style from './Detail.module.css'
 
 const CountriesDetail = () => {
-  //http://localhost:3001/countries/MYS
-
-  let { cod } = useParams()
-  let dispatch = useDispatch()
+  let { cod } = useParams();
+  let dispatch = useDispatch();
   const country = useSelector(state => state.countryDetail)
 
   useEffect(() => {
     dispatch(getCountry(cod))
-  }, [])
-
-  console.log(country)
+  }, []);
 
   return (
     <div className={style.detailContainer} >
