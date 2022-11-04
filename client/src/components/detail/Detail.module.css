@@ -17,12 +17,15 @@
   font-weight: 700;
   border-radius: 20px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .detailContainer button:hover{
   background-color: white;
   box-shadow: rgba(241, 236, 236, 0.904) 0px 3px 15px;
+}
+
+.buttonBack{
+  margin-top: 20px;
 }
 
 .detailCard{

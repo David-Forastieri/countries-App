@@ -63,28 +63,21 @@ router.get('/countries', async (req, res)=>{
 
 router.post('/activities', async (req, res)=>{
   //http://localhost:3001/activities
+  let getObjet = req.body;
+  let idArray = [];
+  getObjet.ct.forEach(element => {
+    idArray.unshift(element.codeId)
+  });
 
-  let algo = req.body
   const newActivity = await TouristActivity.create({
-    touristActivity: algo.data.touristActivity,
-    duration: algo.data.duration,
-    season: algo.data.season,
-    difficulty: algo.data.difficulty
+    touristActivity: getObjet.data.touristActivity,
+    duration: getObjet.data.duration,
+    season: getObjet.data.season,
+    difficulty: getObjet.data.difficulty
   })
 
   try {
-    /* const {data, ct} = req.body;
-    const {touristActivity, duration, season, difficulty} = data; */
-    /* const newActivity = await TouristActivity.create({
-      touristActivity: data.touristActivity,
-      duration: data.duration,
-      season: data.season,
-      difficulty: data.difficulty
-    }) */
-
-    console.log(newActivity)
-
-    await newActivity.setCountries(algo.ct)
+    await newActivity.setCountries(idArray)
     res.send(cagada)
   } catch (error) {
     res.send('algo salio mal')

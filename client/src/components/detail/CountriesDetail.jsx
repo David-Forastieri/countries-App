@@ -8,6 +8,7 @@ import style from './Detail.module.css'
 
 const CountriesDetail = () => {
   //http://localhost:3001/countries/MYS
+
   let { cod } = useParams()
   let dispatch = useDispatch()
   const country = useSelector(state => state.countryDetail)
@@ -20,7 +21,7 @@ const CountriesDetail = () => {
 
   return (
     <div className={style.detailContainer} >
-      <div>
+      <div className={style.buttonBack}>
         <Link to="/home">
           <button>{`<-Back`}</button>
         </Link>
@@ -32,19 +33,28 @@ const CountriesDetail = () => {
             <img src={country.flag} alt={country.name} />
           </div>
           <div className={style.detailInfo}>
+            <h4>General information</h4>
             <ul>
               <li>Continents: {country.continents}</li>
               <li>Capital: {country.capital}</li>
               <li>Subregion: {country.subRegion}</li>
               <li>Area: {country.area} km2</li>
               <li>Population: {country.population}</li>
-              {/* {!country.touristActivities &&
-              <><li>Tourist Activity: {countrie.touristActivities.touristActivity}</li>
-              <li>In season: {touristActivities.season}</li>
-              <li>Difficulty: {touristActivities.difficulty}</li>
-              <li>Activity duration: {touristActivities.duration}min</li>
-              </> } */}
             </ul>
+            <h4>Tourist Activities</h4>
+            {country.touristActivities !== undefined &&
+              country.touristActivities.length > 0 ?
+              <ul>
+                <li>Tourist Activity: {country.touristActivities[0].touristActivity}</li>
+                <li>In season: {country.touristActivities[0].season}</li>
+                <li>Difficulty: {country.touristActivities[0].difficulty}</li>
+                <li>Activity duration: {country.touristActivities[0].duration}min</li>
+              </ul>
+              :
+              <Link to="/form">
+                <button>Create new tourist activities</button>
+              </Link>
+            }
           </div>
         </div>
         :

@@ -9,7 +9,7 @@ import style from './Form.module.css'
 const Form = () => {
 
   const [allCountries, setAllCountries] = useState([])
-  const [selecCountrie, setSelecCountrie] = useState([])
+  //const [selecCountrie, setSelecCountrie] = useState([])
   const [countryId, setCountryId] = useState([])
   const [data, setData] = useState({
     touristActivity: "",
@@ -18,13 +18,14 @@ const Form = () => {
     season: ""
   })
 
-  const history = useNavigate()
- // const dispatch = useDispatch()
-  const Countries = useSelector(state => state.countries)
+  const history = useNavigate();
+  const Countries = useSelector(state => state.countries);
 
   const saveCountryId = (e) =>{
-    setCountryId([...countryId, e.codeId])
-    setSelecCountrie([...selecCountrie, e.name])
+    let selecCountry = {name: e.name, codeId: e.codeId};
+    setCountryId([...countryId, selecCountry])
+  //  setCountryId([...countryId, e.codeId])
+  //  setSelecCountrie([...selecCountrie, e.name])
   }
 
   const handlerChange = (e) => {
@@ -54,7 +55,7 @@ const Form = () => {
     const value = {data, ct: countryId}
 
     fetch('http://localhost:3001/activities', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       body: JSON.stringify(value), // data can be `string` or {object}!
       headers:{
         'Content-Type': 'application/json'
@@ -63,18 +64,11 @@ const Form = () => {
     .then(response => console.log('Success:', response))
     .catch(error => console.error('Error:', error));
 
-    //   dispatch(addTouristActivity(data, selecCountrie))
-    setData({
-      touristActivity: "",
-      difficulty: "",
-      duration: "",
-      season: ""
-    })
     history("/home")
   }
 
   const deleteCountrie = (name) => {
-    setSelecCountrie(selecCountrie.filter(e => e !== name))
+   setCountryId(countryId.filter(e => e.name !== name.name))
   }
 
   return (
@@ -121,10 +115,10 @@ const Form = () => {
         <div className={style.formLabelCountrie}>
           <p>Carry out activity in:</p>
           <div className={style.btnCountrieMain}>
-            {selecCountrie.length > 0 &&
-              selecCountrie.map(e => {
-                return <div key={e} className={style.btnCountrie}>
-                  <p>{e}</p>
+           {countryId.length > 0 &&
+              countryId.map(e => {
+                return <div key={e.codeId} className={style.btnCountrie}>
+                  <p>{e.name}</p>
                   <button className={style.btnDelete} onClick={() => { deleteCountrie(e) }} >X</button>
                 </div>
               })
