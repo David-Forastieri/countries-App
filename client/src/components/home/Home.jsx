@@ -26,14 +26,21 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [allCountries, setAllCountries] = useState([])
   const [controlSearch, setControlSearch] = useState('')
+  const [countriestoShow, setCountriestoShow] = useState([])
 
   useEffect(() => {
     if (!Countries.length) {
       dispatch(getCountries())
     }
-    setAllCountries([...Countries].splice(0, itemPerPage))
+    setAllCountries([...Countries])
+    //  setCountriestoShow([...allCountries].splice(0, itemPerPage))
 
   }, [Countries.length, dispatch]);
+
+  useEffect(() => {
+    setCountriestoShow([...allCountries].splice(0, itemPerPage))
+    setCurrentPage(0)
+  }, [allCountries])
 
   return (
     <div className={style.container} >
@@ -46,10 +53,10 @@ const Home = () => {
       </div>
 
       <div className={style.controlNav}>
-        <button onClick={() => { handlerPrevPage(currentPage, itemPerPage, Countries, setAllCountries, setCurrentPage) }} >Prev</button>
+        <button onClick={() => { handlerPrevPage(currentPage, itemPerPage, allCountries, setCountriestoShow, setCurrentPage) }} >Prev</button>
         <p>{currentPage + 1}</p>
         {allCountries.length >= itemPerPage &&
-          <button onClick={() => { handlerNextPage(Countries, itemPerPage, currentPage, setAllCountries, setCurrentPage) }} >Next</button>
+          <button onClick={() => { handlerNextPage(allCountries, itemPerPage, currentPage, setCountriestoShow, setCurrentPage) }} >Next</button>
         }
       </div>
 
@@ -63,24 +70,24 @@ const Home = () => {
           <button onClick={() => { setSelecOrderView(!selecOrderView) }} >Order</button>
           {!selecOrderView &&
             <ul>
-              <li onClick={() => { handlerOrderAlpha('az', allCountries, itemPerPage, setAllCountries) }}>A - Z</li>
-              <li onClick={() => { handlerOrderAlpha('za', allCountries, itemPerPage, setAllCountries) }}>Z - A</li>
-              <li onClick={() => { handlerOrderNum('za', allCountries, itemPerPage, setAllCountries) }}>high population</li>
-              <li onClick={() => { handlerOrderNum('az', allCountries, itemPerPage, setAllCountries) }}>minor population</li>
+              <li onClick={() => { handlerOrderAlpha('az', allCountries, setAllCountries) }}>A - Z</li>
+              <li onClick={() => { handlerOrderAlpha('za', allCountries, setAllCountries) }}>Z - A</li>
+              <li onClick={() => { handlerOrderNum('hig', allCountries, setAllCountries) }}>high population</li>
+              <li onClick={() => { handlerOrderNum('min', allCountries, setAllCountries) }}>minor population</li>
             </ul>}
         </div>
         <div className={style.selec} >
           <button onClick={() => { setSelecFilterView(!selecFilterView) }} >Filter by continent</button>
           {!selecFilterView &&
             <ul>
-              <li onClick={() => { setAllCountries([...Countries].splice(0, itemPerPage)) }}>All</li>
-              <li onClick={() => { continentsFilter('North America', Countries, setAllCountries, itemPerPage) }}>North America</li>
-              <li onClick={() => { continentsFilter('South America', Countries, setAllCountries, itemPerPage) }}>South America</li>
-              <li onClick={() => { continentsFilter('Europe', Countries, setAllCountries, itemPerPage) }}>Europe</li>
-              <li onClick={() => { continentsFilter('Asia', Countries, setAllCountries, itemPerPage) }}>Asia</li>
-              <li onClick={() => { continentsFilter('Africa', Countries, setAllCountries, itemPerPage) }}>Africa</li>
-              <li onClick={() => { continentsFilter('Oceania', Countries, setAllCountries, itemPerPage) }}>Oceania</li>
-              <li onClick={() => { continentsFilter('Antarctica', Countries, setAllCountries, itemPerPage) }}>Antartica</li>
+              <li onClick={() => { setAllCountries([...Countries]) }}>All</li>
+              <li onClick={() => { continentsFilter('North America', Countries, setAllCountries) }}>North America</li>
+              <li onClick={() => { continentsFilter('South America', Countries, setAllCountries) }}>South America</li>
+              <li onClick={() => { continentsFilter('Europe', Countries, setAllCountries) }}>Europe</li>
+              <li onClick={() => { continentsFilter('Asia', Countries, setAllCountries) }}>Asia</li>
+              <li onClick={() => { continentsFilter('Africa', Countries, setAllCountries) }}>Africa</li>
+              <li onClick={() => { continentsFilter('Oceania', Countries, setAllCountries) }}>Oceania</li>
+              <li onClick={() => { continentsFilter('Antarctica', Countries, setAllCountries) }}>Antartica</li>
             </ul>}
         </div>
       </div>
@@ -88,7 +95,7 @@ const Home = () => {
       <div>{!Countries.length && <Load />}</div>
       {allCountries.length || Countries.length ?
         <div className={style.countries} >
-          {allCountries.map((c) => {
+          {countriestoShow.map((c) => {
             return <Link key={c.codeId} to={`detail/${c.codeId}`} >
               <CountriesCard
                 flag={c.flag}
