@@ -29,10 +29,50 @@ const deleteCountrie = (data, setCountryId, countryId) => {
   setCountryId(countryId.filter(e => e.name !== data.name))
 };
 
+const handlerError = (e, setErrorName, setMessageError, setErrorTime, setSendForm) => {
+  if (e.target.name === 'touristActivity') {
+    if (e.target.value === '') {
+      setErrorName(true)
+      return setMessageError('Obligatory field')
+    }
+    if (e.target.value.match('^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$') === null) {
+      setErrorName(true)
+      return setMessageError('Wrong character')
+    }
+  }
+  if (e.target.name === 'duration') {
+    if (e.target.value.length > 4) {
+      setErrorTime(true)
+      return setMessageError('Too many characters')
+    }
+    if (e.target.value.length <= 1) {
+      setErrorTime(true)
+      return setMessageError('Required field, fill in correctly')
+    }
+  }
+  return setSendForm(true)
+}
+
+const set = (e, setSendForm, setErrorName, setErrorTime, setRequiredMessage) => {
+  if (e.target.name === 'touristActivity') {
+    setSendForm(false)
+    return setErrorName(false)
+  }
+  if (e.target.name === 'duration') {
+    setSendForm(false)
+    return setErrorTime(false)
+  }
+  if (e.target.name === 'countrySelect') {
+    setRequiredMessage(false)
+  }
+}
+
 export {
   handlerCheck,
   handlerChange,
   countryChange,
   saveCountryId,
-  deleteCountrie
+  deleteCountrie,
+  handlerError,
+  set
 };

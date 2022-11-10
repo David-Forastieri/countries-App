@@ -78,9 +78,9 @@ router.post('/activities', async (req, res)=>{
 
   try {
     await newActivity.setCountries(idArray)
-    res.send(cagada)
+    res.json({message:"Successfully created tourism activity"})
   } catch (error) {
-    res.send('algo salio mal')
+    res.json({error})
   }
 })
 

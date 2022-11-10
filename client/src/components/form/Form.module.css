@@ -56,6 +56,17 @@
   font-weight: 700;
 }
 
+.formLabel span{
+  font-weight: 500;
+  margin-left: 100px;
+  color: rgb(243, 57, 57);
+}
+
+.labelInput{
+  border: solid 2px red;
+  background: rgb(240, 175, 175);
+}
+
 .formLabelCountrie{
   background-color: rgba(255, 255, 255, 0.548);
   border: solid 1px rgb(233, 225, 225);
@@ -69,6 +80,12 @@
 
 .formLabelCountrie p{
   margin-bottom: 5px;
+}
+
+.formLabelCountrie span{
+  font-weight: 500;
+  margin-left: 100px;
+  color: rgb(243, 57, 57);
 }
 
 .btnSelectCountrie{
