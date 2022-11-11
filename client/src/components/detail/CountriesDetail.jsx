@@ -13,6 +13,7 @@ const CountriesDetail = () => {
 
   useEffect(() => {
     dispatch(getCountry(cod))
+    return ()=>{dispatch(getCountry(''))}
   }, []);
 
   return (
