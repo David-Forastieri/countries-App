@@ -32,9 +32,7 @@ const Home = () => {
     if (!Countries.length) {
       dispatch(getCountries())
     }
-    setAllCountries([...Countries])
-    //  setCountriestoShow([...allCountries].splice(0, itemPerPage))
-
+    setAllCountries([...Countries]);
   }, [Countries.length, dispatch]);
 
   useEffect(() => {
@@ -70,30 +68,30 @@ const Home = () => {
           <button onClick={() => { setSelecOrderView(!selecOrderView) }} >Order</button>
           {!selecOrderView &&
             <ul>
-              <li onClick={() => { handlerOrderAlpha('az', allCountries, setAllCountries);setSelecOrderView(!selecOrderView) }}>A - Z</li>
-              <li onClick={() => { handlerOrderAlpha('za', allCountries, setAllCountries);setSelecOrderView(!selecOrderView) }}>Z - A</li>
-              <li onClick={() => { handlerOrderNum('hig', allCountries, setAllCountries);setSelecOrderView(!selecOrderView) }}>high population</li>
-              <li onClick={() => { handlerOrderNum('min', allCountries, setAllCountries);setSelecOrderView(!selecOrderView) }}>minor population</li>
+              <li onClick={() => { handlerOrderAlpha('az', allCountries, setAllCountries); setSelecOrderView(!selecOrderView) }}>A - Z</li>
+              <li onClick={() => { handlerOrderAlpha('za', allCountries, setAllCountries); setSelecOrderView(!selecOrderView) }}>Z - A</li>
+              <li onClick={() => { handlerOrderNum('hig', allCountries, setAllCountries); setSelecOrderView(!selecOrderView) }}>high population</li>
+              <li onClick={() => { handlerOrderNum('min', allCountries, setAllCountries); setSelecOrderView(!selecOrderView) }}>minor population</li>
             </ul>}
         </div>
         <div className={style.selec} >
           <button onClick={() => { setSelecFilterView(!selecFilterView) }} >Filter by continent</button>
           {!selecFilterView &&
             <ul>
-              <li onClick={() => { setAllCountries([...Countries]);setSelecFilterView(!selecFilterView) }}>All</li>
-              <li onClick={() => { continentsFilter('North America', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>North America</li>
-              <li onClick={() => { continentsFilter('South America', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>South America</li>
-              <li onClick={() => { continentsFilter('Europe', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>Europe</li>
-              <li onClick={() => { continentsFilter('Asia', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>Asia</li>
-              <li onClick={() => { continentsFilter('Africa', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>Africa</li>
-              <li onClick={() => { continentsFilter('Oceania', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>Oceania</li>
-              <li onClick={() => { continentsFilter('Antarctica', Countries, setAllCountries);setSelecFilterView(!selecFilterView) }}>Antartica</li>
+              <li onClick={() => { setAllCountries([...Countries]); setSelecFilterView(!selecFilterView) }}>All</li>
+              <li onClick={() => { continentsFilter('North America', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>North America</li>
+              <li onClick={() => { continentsFilter('South America', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>South America</li>
+              <li onClick={() => { continentsFilter('Europe', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>Europe</li>
+              <li onClick={() => { continentsFilter('Asia', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>Asia</li>
+              <li onClick={() => { continentsFilter('Africa', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>Africa</li>
+              <li onClick={() => { continentsFilter('Oceania', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>Oceania</li>
+              <li onClick={() => { continentsFilter('Antarctica', Countries, setAllCountries); setSelecFilterView(!selecFilterView) }}>Antartica</li>
             </ul>}
         </div>
       </div>
 
       <div>{!Countries.length && <Load />}</div>
-      {allCountries.length || Countries.length ?
+      {allCountries.length ?
         <div className={style.countries} >
           {countriestoShow.map((c) => {
             return <Link key={c.codeId} to={`detail/${c.codeId}`} >
@@ -105,8 +103,7 @@ const Home = () => {
             </Link>
           })}
         </div>
-        :
-        <p>No country with that name was found</p>
+        : <p className={style.noCountrieMsg}>No country with that name was found</p>
       }
     </div>
   )
